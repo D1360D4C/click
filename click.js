@@ -1,56 +1,70 @@
+
+let img;
+let x=100;
+let y=200;
+let x1=300
+let y1=200;
+let tam=50;
 let miObjeto;
-let vecto=[];
+
+let vectorN=[];
 
 function preload() {
-  img = loadImage('imagen.png'); // carga imagen
+  img = loadImage ('imagen.png'); // carga imagen
 }
 
 function setup() {
   createCanvas(600, 400);
-  miObjeto = new Objeto(img, 50, 50, 50, 50); // posición y tamaño inicial
-  otroObjeto = new Objeto(img, 150, 150, 50, 50); 
-
-  for(let i = 0; i < 10; i++){//que fiaca crear uno por uno, mejor un vector
-      vecto[i]= new Objeto(img, 50, 50, 50, 50);
+  imageMode(CENTER);
+  miObjeto = new Objeto(img,x1,y1,tam,tam);
+  for(let i=0;i<10;i++){
+    vectorN[i]= new Objeto(img,50,100,tam,tam);
   }
 }
 
 function draw() {
   background(220);
-  miObjeto.mostrar();
-  miObjeto.detectarMouse();
-  otroObjeto.mostrar();
-  otroObjeto.detectarMouse();
-  for(let i = 0; i < 10; i++){ //lo mismo pero 10 objetos de una
-      vecto[i].mostrar();
-      vecto[i].detectarMouse();
+  image(img,x,y,tam,tam);
+
+if(mouseX > (x -25) && mouseX < (x+25) && mouseY > (y-25) && mouseY < (y+25) ){
+  x=random(600 - tam/2);
+  y=random(400 - tam/2);
+}
+miObjeto.mostrar();
+miObjeto.escapar();
+
+for(let i=0;i<10;i++){
+vectorN[i].mostrar();
+vectorN[i].escapar();
+}
+}
+//-----------------------------
+class Objeto{
+  constructor(img,x1,y1,ancho,alto){
+    this.img = img;
+    this.x1 = x1;
+    this.y1 = y1;
+    this.ancho = ancho;
+    this.alto= alto;
   }
+mostrar(){
+  image(this.img,this.x1,this.y1,this.ancho,this.alto);
 }
 
-class Objeto {
-  constructor(img, x, y,z,zz) { //el constructor que define caracteristicas
-    this.img = img;
-    this.x = x;
-    this.y = y;
-    this.ancho = z;
-    this.alto = zz;
-  }
-  
-  mostrar() {
-    image(this.img, this.x, this.y,this.ancho, this.alto); //hacer que aparezca
-  }
-  
-  detectarMouse() {
-    // verifica si el mouse esta encima de la imagen
-    if (
-      mouseX > this.x &&
-      mouseX < this.x + this.ancho &&
-      mouseY > this.y &&
-      mouseY < this.y + this.alto
-    ) {
-      // cambia coordenadas x y con random 
-      this.x = random(width - this.ancho);
-      this.y = random(height - this.alto);
-    }
-  }
+escapar(){
+  if(mouseX > (this.x1 -25) && mouseX < (this.x1+25) && mouseY > (this.y1-25) && mouseY < (this.y1+25) ){
+  this.x1=random(600 - tam/2);
+ this.y1=random(400 - tam/2);
 }
+}
+
+
+}
+  
+
+
+
+
+
+  
+
